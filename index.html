@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .backDiv{
+        width: 350px;
+        height: fit-content;
+        background-color: rgb(192, 186, 186);
+        border-radius: 3px;
+        position: absolute; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .checkList{
+        width: 98%;
+        height: 98%;
+        background-color: orange;
+        border-radius: 3px;
+
+    }
+    #list{
+        margin: 1%;
+        font-size: 150%;
+    }
+    input{
+        cursor: pointer;
+        zoom: 150%;
+        margin: 1%;
+        accent-color: rgb(87, 54, 17);
+    }
+    #submitButton{
+        margin: 2%;
+        cursor: pointer;
+    }
+    .buttonContainer{
+        display: flex;
+        justify-content: center;
+    }
+    label{
+        color: rgb(87, 54, 17);
+        font-weight: bold;
+        display: grid;
+        grid-template-columns: 1em auto;
+        gap: 0.5em;
+        cursor: pointer;
+        margin: 1%;
+        line-height: 1.1;
+        width: fit-content;
+        animation: forwards;
+        white-space:nowrap;
+    }
+    label:hover{
+        color: black;
+    }
+    .eachLabel{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .count{
+        display: flex;
+        justify-content: center;
+        margin-left: auto;
+        width: fit-content;
+    }
+    .plus{
+        border-radius: 50%;
+        margin: 0 10px 0 10px;
+        width: 0.8em;
+        cursor: pointer;
+    }
+    .minus{
+        margin: 0 10px 0 10px;
+        border-radius: 50%;
+        width: 0.8em;
+        cursor: pointer;
+    }
+    .quantity{
+    }
+    img{
+        width: 100%;
+    }   
+    .moveIcon{
+        cursor: pointer;
+        width: 100%;
+        height: 5%;
+        background-color: rgb(111, 51, 1);
+        border-radius: 2px 2px 0 0;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
+<body>
+    <div class="backDiv" id="toMove">
+        <div class="checkList">
+            <div class="moveIcon" id="toMoveHeader">D r a g</div>
+            <div id="list">
+                <div class="eachLabel">
+                    <label for="Americano"><input type="checkbox" name="baverage" id="Americano">Americano</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Espresso"><input type="checkbox" name="baverage" id="Espresso">Espresso</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="DoubleEspresso"><input type="checkbox" name="baverage" id="DoubleEspresso">Double Espresso</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Latte"><input type="checkbox" name="baverage" id="Latte">Latte</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Cappuccino"><input type="checkbox" name="baverage" id="Cappuccino">Cappuccino</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="HotChocolate"><input type="checkbox" name="baverage" id="HotChocolate">Hot Chocolate</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Tea"><input type="checkbox" name="baverage" id="Tea">Tea</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Milk"><input type="checkbox" name="baverage" id="Milk">Milk</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+            </div>
+            <div class="buttonContainer">
+                <button id="submitButton" onclick="getCheckedInfo()">Submit</button>
+            </div><br>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    dragElement(document.getElementById("toMove"));
+    function dragElement(element) {
+        let pos1=0,pos2=0,pos3=0,pos4=0;
+        if (document.getElementById(element.id + "Header")) {
+            document.getElementById(element.id + "Header").onmousedown = dragMouseDown; // if clicked on header
+        }
+        function dragMouseDown(e) {
+            document.getElementById("toMoveHeader").style.cursor="grab";
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            element.style.top = (element.offsetTop - pos2) + "px";
+            element.style.left = (element.offsetLeft - pos1) + "px";
+        }
+    
+        function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+            document.getElementById("toMoveHeader").style.cursor="pointer";
+        }
+    }
+    changeQuantity();
+    function changeQuantity() {
+        let wholeListPlus = document.getElementsByClassName('plus');
+        let wholeListMinus = document.getElementsByClassName('minus');
+        let quantities = document.getElementsByClassName('quantity');
+        for(let i=0;i<wholeListPlus.length;i++) {
+            let checked = document.querySelectorAll('input[type=checkbox]');
+            console.log(checked[i].checked);
+            if(checked[i].checked){
+                wholeListPlus[i].addEventListener('click',function(){
+                    let num = parseInt(quantities[i].innerHTML);
+                    quantities[i].innerHTML=num+1;
+                });
+                wholeListMinus[i].addEventListener('click',function(){
+                    let num = parseInt(quantities[i].innerHTML);
+                    if(num-1>0){
+                        quantities[i].innerHTML=num-1;
+                    }
+                });
+            }
+        }
+    }
+    
+
+    function getCheckedInfo() {
+        let list = document.querySelectorAll("input");
+        console.log(list[0].name);
+        let a = document.querySelectorAll('label[for='+list[2].id+']');
+        console.log(a);
+    }
+
+
+    resizeBoard();
+    window.addEventListener("resize",resizeBoard);
+    function resizeBoard() {
+        const wholeContainer = document.getElementsByClassName("backDiv")[0].offsetHeight;
+        document.getElementsByClassName("backDiv")[0].style.height=wholeContainer+10+'px';
+        // const gameVw = document.getElementsByClassName("game")[0].offsetWidth;
+        // document.documentElement.style.setProperty('--height',gameVw + 'px');
+    }
+</script>
