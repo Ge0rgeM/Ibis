@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .backDiv{
+        width: 350px;
+        height: 350px;
+        background-color: rgb(192, 186, 186);
+        border-radius: 3px;
+        position: absolute; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 200px;
+        left: 200px;
+    }
+    .addedMenu{
+        width: 350px;
+        height: 283px;
+        background-color: rgb(192, 186, 186);
+        border-radius: 3px;
+        position: absolute; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .checkList{
+        width: 98%;
+        height: 98%;
+        background-color: orange;
+        border-radius: 3px;
+    }
+    #list{
+        margin: 1%;
+        font-size: 150%;
+    }
+    input{
+        cursor: pointer;
+        zoom: 150%;
+        margin: 1%;
+        accent-color: rgb(87, 54, 17);
+    }
+    #submitButton{
+        margin: 2%;
+        cursor: pointer;
+    }
+    .buttonContainer{
+        display: flex;
+        justify-content: center;
+    }
+    label{
+        color: rgb(87, 54, 17);
+        font-weight: bold;
+        display: grid;
+        grid-template-columns: 1em auto;
+        gap: 0.5em;
+        cursor: pointer;
+        margin: 1%;
+        line-height: 1.1;
+        width: fit-content;
+        animation: forwards;
+        white-space:nowrap;
+    }
+    label:hover{
+        color: black;
+    }
+    .eachLabel{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .count{
+        display: flex;
+        justify-content: center;
+        margin-left: auto;
+        width: fit-content;
+    }
+    .plus{
+        border-radius: 50%;
+        margin: 0 10px 0 10px;
+        width: 0.8em;
+        cursor: pointer;
+    }
+    .minus{
+        margin: 0 10px 0 10px;
+        border-radius: 50%;
+        width: 0.8em;
+        cursor: pointer;
+    }
+    img{
+        width: 100%;
+    }   
+    .moveIcon:active:hover{
+        cursor: grab;
+    }
+    .moveIcon{
+        cursor: pointer;
+        width: 100%;
+        height: fit-content;
+        background-color: rgb(111, 51, 1);
+        border-radius: 2px 2px 0 0;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .menuMoveIcon:active:hover{
+        cursor: grab;
+    }
+    .menuMoveIcon{
+        cursor: pointer;
+        width: 100%;
+        height: fit-content;
+        background-color: rgb(111, 51, 1);
+        border-radius: 2px 2px 0 0;
+        position: relative;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .menuList{
+        width: 98%;
+        height: 98%;
+        background-color: orange;
+        border-radius: 3px;
+    }
+    .eachProductDiv{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding: 0 10px 0 10px; 
+        font-size: 130%;
+    }
+    .productN{
+        margin: auto;
+    }
+    .productCost{
+        display: flex;
+        flex-direction: row-reverse;
+        position: relative;
+        left: -20px;
+    }
+    .totalPriceDiv{
+        width: fit-content;
+        height: 5%;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        float: right;
+        left: -20px;
+        font-size: 130%;
+    }   
+    .totalPrice{
+        padding: 0 10px 0 10px; 
+        
+    }
+    .listNames{
+        padding: 0 20px 0 20px; 
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        background-color: rgb(111, 51, 1);
+        color: white;
+        font-size: 120%;
+    }
+    .number{
+        margin: auto;
+    }
+    .cost{
+        display: flex;
+        flex-direction: row-reverse;
+    }
+</style>
+<body>
+    <div class="backDiv" id="toMove">
+        <div class="checkList">
+            <div class="moveIcon" id="toMoveHeader">D r a g</div>
+            <div id="list">
+                <div class="eachLabel">
+                    <label for="Americano"><input type="checkbox" name="baverage" id="Americano">Americano</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Espresso"><input type="checkbox" name="baverage" id="Espresso">Espresso</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="DoubleEspresso"><input type="checkbox" name="baverage" id="DoubleEspresso">Double Espresso</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Latte"><input type="checkbox" name="baverage" id="Latte">Latte</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Cappuccino"><input type="checkbox" name="baverage" id="Cappuccino">Cappuccino</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="HotChocolate"><input type="checkbox" name="baverage" id="HotChocolate">Hot Chocolate</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Tea"><input type="checkbox" name="baverage" id="Tea">Tea</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+                <div class="eachLabel">
+                    <label for="Milk"><input type="checkbox" name="baverage" id="Milk">Milk</label>
+                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                </div>
+            </div>
+            <div class="buttonContainer">
+                <button id="submitButton" onclick="getCheckedInfo()">Submit</button>
+            </div><br>
+        </div>
+    </div>
+
+    <div class="addedMenu">
+        <div class="menuList">
+            <div class="menuMoveIcon">D r a g</div>
+            <div class="listNames"><div class="product">Product</div><div class="number">Number</div><div class="cost">cost</div></div>
+            <div class="eachProductDiv">
+                <div class="productName">Americano</div>
+                <div class="productN">1</div>
+                <div class="productCost">1</div>
+            </div>
+            <div class="totalPriceDiv"><span class="totalPriceText">Total:</span><div class="totalPrice">1</div></div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    dragElement(document.getElementById("toMove"));
+    changeQuantity();
+    uncheckDefault();
+
+    function dragElement(element) {
+        let pos1=0,pos2=0,pos3=0,pos4=0;
+        if (document.getElementById(element.id + "Header")) {
+            document.getElementById(element.id + "Header").onmousedown = dragMouseDown; // if clicked on header
+        }
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            element.style.top = (element.offsetTop - pos2) + "px";
+            element.style.left = (element.offsetLeft - pos1) + "px";
+        }
+    
+        function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+    function uncheckDefault() {
+        let quantities = document.getElementsByClassName('quantity');
+        let checked = document.querySelectorAll('input[type=checkbox]');
+        for(let i=0;i<checked.length;i++){
+            checked[i].addEventListener('click',function() {
+                if(!checked[i].checked){
+                    quantities[i].innerHTML=1;
+                }
+            });
+        }
+    }
+    function changeQuantity() {
+        let wholeListPlus = document.getElementsByClassName('plus');
+        let wholeListMinus = document.getElementsByClassName('minus');
+        let quantities = document.getElementsByClassName('quantity');
+        for(let i=0;i<wholeListPlus.length;i++) {
+            wholeListPlus[i].addEventListener('click',function(){
+                let checked = document.querySelectorAll('input[type=checkbox]');
+                if(checked[i].checked){
+                    let num = parseInt(quantities[i].innerHTML);
+                    quantities[i].innerHTML=num+1;
+                }
+            });
+            wholeListMinus[i].addEventListener('click',function(){
+                let checked = document.querySelectorAll('input[type=checkbox]');
+                if(checked[i].checked){
+                    let num = parseInt(quantities[i].innerHTML);
+                    if(num-1>0){
+                        quantities[i].innerHTML=num-1;
+                    }
+                }
+            });
+        }
+    }
+    let costs={
+        'Americano': 5,
+        'Espresso': 5,
+        'Double Espresso': 6,
+        'Latte': 6,
+        'Cappuccino': 6,
+        'Hot Chocolate': 8,
+        'Tea': 4,
+        'Milk': 3
+    };
+    function Menu(name,quantity,cost) {
+        this.name=name;
+        this.quantity=quantity;
+        this.cost=cost;
+    }
+    function getCheckedInfo() {
+        let list = document.querySelectorAll("input[type=checkbox]");
+        let labels = document.querySelectorAll('label');
+        let quantities = document.getElementsByClassName('quantity');
+        let menulist = [];
+        for(let i=0;i<list.length;i++) {
+            if(list[i].checked){
+                console.log(labels[i].textContent,quantities[i].textContent);
+                let name = labels[i].textContent;
+                let quantity = parseInt(quantities[i].textContent);
+                let cost = costs[name];
+                menulist.push(new Menu(name,quantity,cost));
+                quantities[i].innerHTML=1;
+                list[i].checked=false;
+            }
+        }
+        addMenu(menulist);
+    }
+    let menusCount=0;
+    function addMenu(menulist) {
+        for(let i=0;i<menulist.length;i++) {
+            console.log(menulist[i].name,menulist[i].quantity,menulist[i].cost);
+            let body = document.querySelectorAll('body');
+            // menusCount++;
+            // body[0].innerHTML=1;
+        }
+    }
+    function menuBoardHeighResizer(element) {
+        const wholeContainer = element.offsetHeight;
+        element.style.height=wholeContainer+10+'px';
+
+    }
+    function resizeBoard() {
+        const wholeContainer = document.getElementsByClassName("backDiv")[0].offsetHeight;
+        document.getElementsByClassName("backDiv")[0].style.height=wholeContainer+10+'px';
+        // const gameVw = document.getElementsByClassName("game")[0].offsetWidth;
+        // document.documentElement.style.setProperty('--height',gameVw + 'px');
+    }
+</script>
