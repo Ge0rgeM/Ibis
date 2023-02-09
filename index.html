@@ -20,8 +20,8 @@
         left: 200px;
     }
     .addedMenu{
-        width: 350px;
-        height: 283px;
+        width: 500px;
+        height: fit-content;
         background-color: rgb(192, 186, 186);
         border-radius: 3px;
         position: absolute; 
@@ -101,7 +101,7 @@
     .moveIcon{
         cursor: pointer;
         width: 100%;
-        height: fit-content;
+        height: 25px;
         background-color: rgb(111, 51, 1);
         border-radius: 2px 2px 0 0;
         color: white;
@@ -174,6 +174,9 @@
         display: flex;
         flex-direction: row-reverse;
     }
+    .listOfEachProductDiv{
+        color: black;
+    }
 </style>
 <body>
     <div class="backDiv" id="toMove">
@@ -219,7 +222,7 @@
         </div>
     </div>
 
-    <div class="addedMenu">
+    <!-- <div class="addedMenu">
         <div class="menuList">
             <div class="menuMoveIcon">D r a g</div>
             <div class="listNames"><div class="product">Product</div><div class="number">Number</div><div class="cost">cost</div></div>
@@ -230,7 +233,7 @@
             </div>
             <div class="totalPriceDiv"><span class="totalPriceText">Total:</span><div class="totalPrice">1</div></div>
         </div>
-    </div>
+    </div> -->
 </body>
 </html>
 <script>
@@ -243,28 +246,28 @@
         if (document.getElementById(element.id + "Header")) {
             document.getElementById(element.id + "Header").onmousedown = dragMouseDown; // if clicked on header
         }
-        function dragMouseDown(e) {
-            e = e || window.event;
-            e.preventDefault();
-            // get the mouse cursor position at startup:
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            // call a function whenever the cursor moves:
-            document.onmousemove = elementDrag;
-        }
-        function elementDrag(e) {
-            e = e || window.event;
-            e.preventDefault();
-            // calculate the new cursor position:
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            // set the element's new position:
-            element.style.top = (element.offsetTop - pos2) + "px";
-            element.style.left = (element.offsetLeft - pos1) + "px";
-        }
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+    }
     
         function closeDragElement() {
             /* stop moving when mouse button is released:*/
@@ -341,22 +344,62 @@
     }
     let menusCount=0;
     function addMenu(menulist) {
+        let totalcost = 0;
+        let body = document.querySelectorAll('body');
+        console.log(addMenuJSDiv());
+        body[0].innerHTML+=addMenuJSDiv();
+        let toUpdate='';    
         for(let i=0;i<menulist.length;i++) {
+            toUpdate=document.getElementsByClassName('listOfEachProductDiv')[menusCount];
+            // console.log(toUpdate);
             console.log(menulist[i].name,menulist[i].quantity,menulist[i].cost);
-            let body = document.querySelectorAll('body');
-            // menusCount++;
-            // body[0].innerHTML=1;
+            updateMenuDiv(toUpdate,menulist[i].name,menulist[i].quantity,menulist[i].cost,'');
+            totalcost+=menulist[i].cost*menulist[i].quantity;
+        }
+        toUpdate=document.getElementsByClassName('totalPrice')[menusCount];
+        updateMenuDiv(toUpdate,'','','',totalcost);
+        menuBoardHeighResizer(document.getElementsByClassName('addedMenu')[menusCount]);
+        dragElement(document.getElementById("toMove"));
+        dragElement(document.getElementById("menuToMove"));
+        changeQuantity();
+        uncheckDefault();
+        menusCount++;
+    }
+    function updateMenuDiv(div,name,number,cost,total){
+        if(name!=''){
+            div.innerHTML+=
+                '<div class="eachProductDiv">'+
+                    '<div class="productName">'+name+'</div>'+
+                    '<div class="productN">'+number+'</div>'+
+                    '<div class="productCost">'+cost+' Gel</div>'+
+                '</div>';
+        }else {
+            console.log(div);
+            div.innerHTML=total+" Gel";
         }
     }
+    function addMenuJSDiv(){
+        let stringForDiv='<div class="addedMenu menuToMove">'+
+            '<div class="menuList">'+
+                '<div class="menuMoveIcon menuToMoveHeader">D r a g</div>'+
+                '<div class="listNames"><div class="product">Product</div><div class="number">Number</div><div class="cost">cost</div></div>'+
+                '<div class="listOfEachProductDiv"></div>'+
+                '<div class="totalPriceDiv"><span class="totalPriceText">Total:</span><div class="totalPrice"></div></div>'+
+            '</div>'+
+        '</div>';
+        return stringForDiv;
+    }
+
+
+
     function menuBoardHeighResizer(element) {
         const wholeContainer = element.offsetHeight;
         element.style.height=wholeContainer+10+'px';
-
     }
-    function resizeBoard() {
+    /* function resizeBoard() {
         const wholeContainer = document.getElementsByClassName("backDiv")[0].offsetHeight;
         document.getElementsByClassName("backDiv")[0].style.height=wholeContainer+10+'px';
         // const gameVw = document.getElementsByClassName("game")[0].offsetWidth;
         // document.documentElement.style.setProperty('--height',gameVw + 'px');
-    }
+    } */
 </script>
