@@ -16,8 +16,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        top: 200px;
-        left: 200px;
+        top: 30px;
+        left: 30px;
         z-index: 1000;
     }
     .addedMenu{
@@ -29,6 +29,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        top: 200px;
+        left: 500px;
     }
     .checkList{
         width: 98%;
@@ -130,6 +132,8 @@
         height: 98%;
         background-color: orange;
         border-radius: 3px;
+        display: flex;
+        flex-direction: column;
     }
     .eachProductDiv{
         display: grid;
@@ -144,20 +148,22 @@
         display: flex;
         flex-direction: row-reverse;
         position: relative;
-        left: -20px;
+        left: -5px;
     }
     .totalPriceDiv{
-        width: fit-content;
-        height: 5%;
+        width: 100%;
+        height: fit-content;
         display: flex;
         flex-direction: row;
         position: relative;
+        justify-content: end;
         float: right;
-        left: -20px;
+        LEFT: -5px;
         font-size: 130%;
     }   
     .totalPrice{
         padding: 0 10px 0 10px; 
+        height: fit-content;
         
     }
     .listNames{
@@ -178,43 +184,47 @@
     .listOfEachProductDiv{
         color: black;
     }
+    #menuButton{
+        margin: auto;
+    }
 </style>
 <body>
     <div class="backDiv" id="toMove">
         <div class="checkList">
             <div class="moveIcon" id="toMoveHeader">D r a g</div>
             <div id="list">
+                <!-- <div class="minus"><img src="./minus.png" alt=""></div> -->
                 <div class="eachLabel">
                     <label for="Americano"><input type="checkbox" name="baverage" id="Americano">Americano</label>
-                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
                 </div>
                 <div class="eachLabel">
                     <label for="Espresso"><input type="checkbox" name="baverage" id="Espresso">Espresso</label>
-                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
                 </div>
                 <div class="eachLabel">
                     <label for="DoubleEspresso"><input type="checkbox" name="baverage" id="DoubleEspresso">Double Espresso</label>
-                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
                 </div>
                 <div class="eachLabel">
                     <label for="Latte"><input type="checkbox" name="baverage" id="Latte">Latte</label>
-                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
                 </div>
                 <div class="eachLabel">
                     <label for="Cappuccino"><input type="checkbox" name="baverage" id="Cappuccino">Cappuccino</label>
-                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
                 </div>
                 <div class="eachLabel">
                     <label for="HotChocolate"><input type="checkbox" name="baverage" id="HotChocolate">Hot Chocolate</label>
-                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
                 </div>
                 <div class="eachLabel">
                     <label for="Tea"><input type="checkbox" name="baverage" id="Tea">Tea</label>
-                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
                 </div>
                 <div class="eachLabel">
                     <label for="Milk"><input type="checkbox" name="baverage" id="Milk">Milk</label>
-                    <div class="count"><div class="plus"><img src="./plus.png" alt=""></div><span class="quantity">1</span><div class="minus"><img src="./minus.png" alt=""></div></div>
+                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
                 </div>
             </div>
             <div class="buttonContainer">
@@ -330,8 +340,9 @@
         }
         addMenu(menulist);
     }
-    let menusCount=0;
     function addMenu(menulist) {
+        let menusCount=document.getElementsByClassName('addedMenu').length;
+        console.log(menusCount);
         let totalcost = 0;
         let body = document.querySelectorAll('body');
         console.log(addMenuJSDiv());
@@ -354,8 +365,18 @@
         }
         changeQuantity();
         uncheckDefault();
-        menusCount++;
+        checkToRemoveMenu(document.getElementsByClassName('menuCheck'));
     }
+
+    function checkToRemoveMenu(menuCheckList) {
+        let menuDivs = document.getElementsByClassName('addedMenu');
+        for(let i=0;i<menuCheckList.length;i++) {
+            menuCheckList[i].onclick = function() {
+                this.parentNode.parentNode.parentNode.remove();
+            }
+        }
+    }
+
     function updateMenuDiv(div,name,number,cost,total){
         if(name!=''){
             div.innerHTML+=
@@ -376,6 +397,7 @@
                 '<div class="listNames"><div class="product">Product</div><div class="number">Number</div><div class="cost">cost</div></div>'+
                 '<div class="listOfEachProductDiv"></div>'+
                 '<div class="totalPriceDiv"><span class="totalPriceText">Total:</span><div class="totalPrice"></div></div>'+
+                '<div id="menuButton"><button class="menuCheck">Checked</button></div>'+
             '</div>'+
         '</div>';
         return stringForDiv;
