@@ -193,7 +193,6 @@
         <div class="checkList">
             <div class="moveIcon" id="toMoveHeader">D r a g</div>
             <div id="list">
-                <!-- <div class="minus"><img src="./minus.png" alt=""></div> -->
                 <div class="eachLabel">
                     <label for="Americano"><input type="checkbox" name="baverage" id="Americano">Americano</label>
                     <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
@@ -235,15 +234,154 @@
 </body>
 </html>
 <script>
+    // START 
     dragElement(document.getElementById("toMove"));
     changeQuantity();
     uncheckDefault();
+    // START 
+    
+    // GLOBAL
+    let costs={ // All produvts and their costs
+        'Americano': 5,
+        'Espresso': 5,
+        'Double Espresso': 6,
+        'Latte': 6,
+        'Cappuccino': 6,
+        'Hot Chocolate': 8,
+        'Tea': 4,
+        'Milk': 3
+    };
 
+    function Menu(name,quantity,cost) { // To make menu list quickly
+        this.name=name;
+        this.quantity=quantity;
+        this.cost=cost;
+    }
+    // GLOBAL
+
+
+    // Main Program !-------------------------------
+    function uncheckDefault() { // if checked one is unchecked, makes it's quantity to DEFAULT;
+        let quantities = document.getElementsByClassName('quantity');
+        let checked = document.querySelectorAll('input[type=checkbox]');
+        for(let i=0;i<checked.length;i++){
+            checked[i].addEventListener('click',function() {
+                if(!checked[i].checked){
+                    quantities[i].innerHTML=1;
+                }
+            });
+        }
+    }
+    function changeQuantity() { // function for functioning plus/minus signs
+        let wholeListPlus = document.getElementsByClassName('plus');
+        let wholeListMinus = document.getElementsByClassName('minus');
+        let quantities = document.getElementsByClassName('quantity');
+        for(let i=0;i<wholeListPlus.length;i++) {
+            wholeListPlus[i].addEventListener('click',function(){
+                let checked = document.querySelectorAll('input[type=checkbox]');
+                if(checked[i].checked){
+                    let num = parseInt(quantities[i].innerHTML);
+                    quantities[i].innerHTML=num+1;
+                }
+            });
+            wholeListMinus[i].addEventListener('click',function(){
+                let checked = document.querySelectorAll('input[type=checkbox]');
+                if(checked[i].checked){
+                    let num = parseInt(quantities[i].innerHTML);
+                    if(num-1>0){
+                        quantities[i].innerHTML=num-1;
+                    }
+                }
+            });
+        }
+    }
+    function getCheckedInfo() {
+        let list = document.querySelectorAll("input[type=checkbox]");
+        let labels = document.querySelectorAll('label');
+        let quantities = document.getElementsByClassName('quantity');
+        let menulist = []; // to Store main menu's list of products,quantities and costs;
+        for(let i=0;i<list.length;i++) {
+            if(list[i].checked){ // store ONLY if it's checked
+                let name = labels[i].textContent;
+                let quantity = parseInt(quantities[i].textContent);
+                let cost = costs[name];
+                menulist.push(new Menu(name,quantity,cost));
+                quantities[i].innerHTML=1; // make it again DEFAULT
+                list[i].checked=false; // make it again DEFAULT
+            }
+        }
+        addMenu(menulist); // pass it to menu adding function;
+    }
+    function addMenu(menulist) {
+        let menusCount=document.getElementsByClassName('addedMenu').length; // to know how many added menus we already have
+        let totalcost = 0; // variable for storing total value
+        let body = document.querySelectorAll('body');
+        body[0].innerHTML+=addMenuJSDiv(); // adding new Menu Template (JUST);
+        let toUpdate='';// to store which menu we need to update
+        for(let i=0;i<menulist.length;i++) {
+            toUpdate=document.getElementsByClassName('listOfEachProductDiv')[menusCount];
+            updateMenuDiv(toUpdate,menulist[i].name,menulist[i].quantity,menulist[i].cost,''); // pass function all details which we need to update;
+            totalcost+=menulist[i].cost*menulist[i].quantity; // product price * procuct quantity;
+        }
+        toUpdate=document.getElementsByClassName('totalPrice')[menusCount];
+        updateMenuDiv(toUpdate,'','','',totalcost); // update ONLY total cost
+
+        menuBoardHeighResizer(document.getElementsByClassName('addedMenu')[menusCount]);
+
+        for(let i=0;i<=menusCount;i++)  // To refresh all of them
+            dragElementMenu(document.getElementsByClassName('menuToMove')[i]);
+        dragElement(document.getElementById("toMove"));  // To refresh
+        changeQuantity(); // To refresh all of them
+        uncheckDefault(); // To refresh all of them
+        checkToRemoveMenu(document.getElementsByClassName('menuCheck')); // do EVERY TIME since we are deleting some of them
+    }
+    function checkToRemoveMenu(menuCheckList) {//Add onclick function to every added menu's buton so if it's clicked delete it
+        for(let i=0;i<menuCheckList.length;i++) {
+            menuCheckList[i].onclick = function() {
+                this.parentNode.parentNode.parentNode.remove(); // three parent nodes, so we delete whole menu 
+            }
+        }
+    }
+    // Main Program -------------------------------!
+
+
+    //Others !-------------------------------
+    function updateMenuDiv(div,name,number,cost,total){
+        if(name!=''){
+            div.innerHTML+=
+            '<div class="eachProductDiv">'+
+                '<div class="productName">'+name+'</div>'+
+                '<div class="productN">'+number+'</div>'+
+                '<div class="productCost">'+cost+' Gel</div>'+
+            '</div>';
+        }else {
+            console.log(div);
+            div.innerHTML=total+" Gel";
+        }
+    }
+    function addMenuJSDiv(){ // Pre-made function for empty Menu(added) div; 
+        let stringForDiv='<div class="addedMenu menuToMove">'+
+            '<div class="menuList">'+
+            '<div class="menuMoveIcon menuToMoveHeader">D r a g</div>'+
+            '<div class="listNames"><div class="product">Product</div><div class="number">Number</div><div class="cost">cost</div></div>'+
+            '<div class="listOfEachProductDiv"></div>'+
+            '<div class="totalPriceDiv"><span class="totalPriceText">Total:</span><div class="totalPrice"></div></div>'+
+            '<div id="menuButton"><button class="menuCheck">Checked</button></div>'+
+            '</div>'+
+            '</div>';
+        return stringForDiv;
+    }
+    function menuBoardHeighResizer(element) {
+        const wholeContainer = element.offsetHeight;
+        element.style.height=wholeContainer+20+'px';
+    }
+    //Others -------------------------------!
+
+
+    // Functions for Dragging Main and added Menu !-------------------------------
     function dragElement(element) {
         let pos1=0,pos2=0,pos3=0,pos4=0;
-        if (document.getElementById(element.id + "Header")) {
-            document.getElementById(element.id + "Header").onmousedown = dragMouseDown; // if clicked on header
-        }
+        document.getElementById(element.id + "Header").onmousedown = dragMouseDown; // if clicked on header
         function dragMouseDown(e) {
             e = e || window.event;
             e.preventDefault();
@@ -272,135 +410,6 @@
             document.onmouseup = null;
             document.onmousemove = null;
         }
-    }
-    function uncheckDefault() {
-        let quantities = document.getElementsByClassName('quantity');
-        let checked = document.querySelectorAll('input[type=checkbox]');
-        for(let i=0;i<checked.length;i++){
-            checked[i].addEventListener('click',function() {
-                if(!checked[i].checked){
-                    quantities[i].innerHTML=1;
-                }
-            });
-        }
-    }
-    function changeQuantity() {
-        let wholeListPlus = document.getElementsByClassName('plus');
-        let wholeListMinus = document.getElementsByClassName('minus');
-        let quantities = document.getElementsByClassName('quantity');
-        for(let i=0;i<wholeListPlus.length;i++) {
-            wholeListPlus[i].addEventListener('click',function(){
-                let checked = document.querySelectorAll('input[type=checkbox]');
-                if(checked[i].checked){
-                    let num = parseInt(quantities[i].innerHTML);
-                    quantities[i].innerHTML=num+1;
-                }
-            });
-            wholeListMinus[i].addEventListener('click',function(){
-                let checked = document.querySelectorAll('input[type=checkbox]');
-                if(checked[i].checked){
-                    let num = parseInt(quantities[i].innerHTML);
-                    if(num-1>0){
-                        quantities[i].innerHTML=num-1;
-                    }
-                }
-            });
-        }
-    }
-    let costs={
-        'Americano': 5,
-        'Espresso': 5,
-        'Double Espresso': 6,
-        'Latte': 6,
-        'Cappuccino': 6,
-        'Hot Chocolate': 8,
-        'Tea': 4,
-        'Milk': 3
-    };
-    function Menu(name,quantity,cost) {
-        this.name=name;
-        this.quantity=quantity;
-        this.cost=cost;
-    }
-    function getCheckedInfo() {
-        let list = document.querySelectorAll("input[type=checkbox]");
-        let labels = document.querySelectorAll('label');
-        let quantities = document.getElementsByClassName('quantity');
-        let menulist = [];
-        for(let i=0;i<list.length;i++) {
-            if(list[i].checked){
-                console.log(labels[i].textContent,quantities[i].textContent);
-                let name = labels[i].textContent;
-                let quantity = parseInt(quantities[i].textContent);
-                let cost = costs[name];
-                menulist.push(new Menu(name,quantity,cost));
-                quantities[i].innerHTML=1;
-                list[i].checked=false;
-            }
-        }
-        addMenu(menulist);
-    }
-    function addMenu(menulist) {
-        let menusCount=document.getElementsByClassName('addedMenu').length;
-        console.log(menusCount);
-        let totalcost = 0;
-        let body = document.querySelectorAll('body');
-        console.log(addMenuJSDiv());
-        body[0].innerHTML+=addMenuJSDiv();
-        let toUpdate='';    
-        for(let i=0;i<menulist.length;i++) {
-            toUpdate=document.getElementsByClassName('listOfEachProductDiv')[menusCount];
-            // console.log(toUpdate);
-            console.log(menulist[i].name,menulist[i].quantity,menulist[i].cost);
-            updateMenuDiv(toUpdate,menulist[i].name,menulist[i].quantity,menulist[i].cost,'');
-            totalcost+=menulist[i].cost*menulist[i].quantity;
-        }
-        toUpdate=document.getElementsByClassName('totalPrice')[menusCount];
-        updateMenuDiv(toUpdate,'','','',totalcost);
-        
-        menuBoardHeighResizer(document.getElementsByClassName('addedMenu')[menusCount]);
-        dragElement(document.getElementById("toMove"));
-        for(let i=0;i<=menusCount;i++) {
-            dragElementMenu(document.getElementsByClassName('menuToMove')[i]);
-        }
-        changeQuantity();
-        uncheckDefault();
-        checkToRemoveMenu(document.getElementsByClassName('menuCheck'));
-    }
-
-    function checkToRemoveMenu(menuCheckList) {
-        let menuDivs = document.getElementsByClassName('addedMenu');
-        for(let i=0;i<menuCheckList.length;i++) {
-            menuCheckList[i].onclick = function() {
-                this.parentNode.parentNode.parentNode.remove();
-            }
-        }
-    }
-
-    function updateMenuDiv(div,name,number,cost,total){
-        if(name!=''){
-            div.innerHTML+=
-                '<div class="eachProductDiv">'+
-                    '<div class="productName">'+name+'</div>'+
-                    '<div class="productN">'+number+'</div>'+
-                    '<div class="productCost">'+cost+' Gel</div>'+
-                '</div>';
-        }else {
-            console.log(div);
-            div.innerHTML=total+" Gel";
-        }
-    }
-    function addMenuJSDiv(){
-        let stringForDiv='<div class="addedMenu menuToMove">'+
-            '<div class="menuList">'+
-                '<div class="menuMoveIcon menuToMoveHeader">D r a g</div>'+
-                '<div class="listNames"><div class="product">Product</div><div class="number">Number</div><div class="cost">cost</div></div>'+
-                '<div class="listOfEachProductDiv"></div>'+
-                '<div class="totalPriceDiv"><span class="totalPriceText">Total:</span><div class="totalPrice"></div></div>'+
-                '<div id="menuButton"><button class="menuCheck">Checked</button></div>'+
-            '</div>'+
-        '</div>';
-        return stringForDiv;
     }
     function dragElementMenu(element) {
         let pos1=0,pos2=0,pos3=0,pos4=0;
@@ -433,16 +442,5 @@
             document.onmousemove = null;
         }
     }
-
-
-    function menuBoardHeighResizer(element) {
-        const wholeContainer = element.offsetHeight;
-        element.style.height=wholeContainer+20+'px';
-    }
-    /* function resizeBoard() {
-        const wholeContainer = document.getElementsByClassName("backDiv")[0].offsetHeight;
-        document.getElementsByClassName("backDiv")[0].style.height=wholeContainer+10+'px';
-        // const gameVw = document.getElementsByClassName("game")[0].offsetWidth;
-        // document.documentElement.style.setProperty('--height',gameVw + 'px');
-    } */
+    // Functions for Dragging Main and added Menu -------------------------------!
 </script>
