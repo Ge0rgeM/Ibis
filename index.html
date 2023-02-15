@@ -22,7 +22,6 @@
     }
     .addedMenu{
         width: 500px;
-        height: fit-content;
         background-color: rgb(192, 186, 186);
         border-radius: 3px;
         position: absolute; 
@@ -102,7 +101,6 @@
         cursor: grab;
     }
     .moveIcon{
-        cursor: pointer;
         width: 100%;
         height: 25px;
         background-color: rgb(111, 51, 1);
@@ -129,7 +127,7 @@
     }
     .menuList{
         width: 98%;
-        height: 98%;
+        height: fit-content;
         background-color: orange;
         border-radius: 3px;
         display: flex;
@@ -186,12 +184,18 @@
     }
     #menuButton{
         margin: auto;
+        padding: 5px;
+    }
+    .menuChange{
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
     }
 </style>
 <body>
     <div class="backDiv" id="toMove">
         <div class="checkList">
-            <div class="moveIcon" id="toMoveHeader">D r a g</div>
+            <div class="moveIcon" id="toMoveHeader">D r a g <div class="menuChange"><img src="./change.png" alt=""></div></div>
             <div id="list">
                 <div class="eachLabel">
                     <label for="Americano"><input type="checkbox" name="baverage" id="Americano">Americano</label>
@@ -312,7 +316,14 @@
         }
         addMenu(menulist); // pass it to menu adding function;
     }
+    function checkMenuValid(menu) { // if Menu is empty return 0 else 1+
+        return menu.length;   
+    }
     function addMenu(menulist) {
+        if(!checkMenuValid(menulist)){
+            alert("Menu Is Empty !");
+            return;
+        }
         let menusCount=document.getElementsByClassName('addedMenu').length; // to know how many added menus we already have
         let totalcost = 0; // variable for storing total value
         let body = document.querySelectorAll('body');
@@ -326,7 +337,7 @@
         toUpdate=document.getElementsByClassName('totalPrice')[menusCount];
         updateMenuDiv(toUpdate,'','','',totalcost); // update ONLY total cost
 
-        menuBoardHeighResizer(document.getElementsByClassName('addedMenu')[menusCount]);
+        addedMenuBoardResizer(document.getElementsByClassName('menuList')[menusCount]);
 
         for(let i=0;i<=menusCount;i++)  // To refresh all of them
             dragElementMenu(document.getElementsByClassName('menuToMove')[i]);
@@ -371,9 +382,11 @@
             '</div>';
         return stringForDiv;
     }
-    function menuBoardHeighResizer(element) {
-        const wholeContainer = element.offsetHeight;
-        element.style.height=wholeContainer+20+'px';
+    function addedMenuBoardResizer(element) {
+        const wholeContainerH = element.offsetHeight;
+        const wholeContainerW = element.offsetWidth;
+        element.parentNode.style.height=wholeContainerH+7+'px';
+        element.parentNode.style.width=wholeContainerW+5+'px';
     }
     //Others -------------------------------!
 
