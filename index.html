@@ -121,6 +121,7 @@
         border-radius: 2px 2px 0 0;
         position: relative;
         color: white;
+        position: inherit;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -189,47 +190,33 @@
     .menuChange{
         height: 20px;
         width: 20px;
+        float: right;
+        margin: 0 10px 0 0;
+    }
+    .dragText{
+        margin: auto;
+        position: relative;
+        left: 10px;
+    }
+    .menuChangeIcon{
         cursor: pointer;
+        color: white;
+    }
+    #menuName{
+        width: 100%;
+        background-color: rgb(111, 51, 1);
+        color: white;
+        font-size: 120%;
+        display: flex;
+        justify-content: center;
     }
 </style>
 <body>
     <div class="backDiv" id="toMove">
         <div class="checkList">
-            <div class="moveIcon" id="toMoveHeader">D r a g <div class="menuChange"><img src="./change.png" alt=""></div></div>
-            <div id="list">
-                <div class="eachLabel">
-                    <label for="Americano"><input type="checkbox" name="baverage" id="Americano">Americano</label>
-                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
-                </div>
-                <div class="eachLabel">
-                    <label for="Espresso"><input type="checkbox" name="baverage" id="Espresso">Espresso</label>
-                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
-                </div>
-                <div class="eachLabel">
-                    <label for="DoubleEspresso"><input type="checkbox" name="baverage" id="DoubleEspresso">Double Espresso</label>
-                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
-                </div>
-                <div class="eachLabel">
-                    <label for="Latte"><input type="checkbox" name="baverage" id="Latte">Latte</label>
-                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
-                </div>
-                <div class="eachLabel">
-                    <label for="Cappuccino"><input type="checkbox" name="baverage" id="Cappuccino">Cappuccino</label>
-                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
-                </div>
-                <div class="eachLabel">
-                    <label for="HotChocolate"><input type="checkbox" name="baverage" id="HotChocolate">Hot Chocolate</label>
-                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
-                </div>
-                <div class="eachLabel">
-                    <label for="Tea"><input type="checkbox" name="baverage" id="Tea">Tea</label>
-                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
-                </div>
-                <div class="eachLabel">
-                    <label for="Milk"><input type="checkbox" name="baverage" id="Milk">Milk</label>
-                    <div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>
-                </div>
-            </div>
+            <div class="moveIcon" id="toMoveHeader"><div class="dragText">D r a g</div><div class="menuChange"><img onclick="menuChangeJS()" class="menuChangeIcon" src="./change.png" alt=""></div></div>
+            <div id="menuName">First Menu</div>
+            <div id="list"></div>
             <div class="buttonContainer">
                 <button id="submitButton" onclick="getCheckedInfo()">Submit</button>
             </div><br>
@@ -238,13 +225,11 @@
 </body>
 </html>
 <script>
-    // START 
-    dragElement(document.getElementById("toMove"));
-    changeQuantity();
-    uncheckDefault();
-    // START 
-    
     // GLOBAL
+    const menus={
+        'firstMenu':addFirstMenu(),
+        'secondMenu':addSecondMenu()
+    };
     let costs={ // All produvts and their costs
         'Americano': 5,
         'Espresso': 5,
@@ -253,7 +238,8 @@
         'Cappuccino': 6,
         'Hot Chocolate': 8,
         'Tea': 4,
-        'Milk': 3
+        'Milk': 3,
+        'Snickers': 5
     };
 
     function Menu(name,quantity,cost) { // To make menu list quickly
@@ -263,8 +249,29 @@
     }
     // GLOBAL
 
+    // START 
+    document.getElementById('list').innerHTML=menus.firstMenu;
+    dragElement(document.getElementById("toMove"));
+    changeQuantity();
+    uncheckDefault();
+    // START 
+    
+
 
     // Main Program !-------------------------------
+    function menuChangeJS() {
+        let current = document.getElementById('menuName');
+        let menuToChange=document.getElementById('list');
+        if(current.innerHTML=='First Menu'){
+            menuToChange.innerHTML=menus.secondMenu;
+            current.innerHTML="Second Menu";
+        }else {
+            current.innerHTML="First Menu";
+            menuToChange.innerHTML=menus.firstMenu;
+        }
+        changeQuantity(); // To refresh all of them
+        uncheckDefault(); // To refresh all of them
+    }
     function uncheckDefault() { // if checked one is unchecked, makes it's quantity to DEFAULT;
         let quantities = document.getElementsByClassName('quantity');
         let checked = document.querySelectorAll('input[type=checkbox]');
@@ -366,7 +373,6 @@
                 '<div class="productCost">'+cost+' Gel</div>'+
             '</div>';
         }else {
-            console.log(div);
             div.innerHTML=total+" Gel";
         }
     }
@@ -387,6 +393,48 @@
         const wholeContainerW = element.offsetWidth;
         element.parentNode.style.height=wholeContainerH+7+'px';
         element.parentNode.style.width=wholeContainerW+5+'px';
+    }
+    function addFirstMenu() {
+        let firMenuHTML='<div class="eachLabel">'+
+                    '<label for="Americano"><input type="checkbox" name="baverage" id="Americano">Americano</label>'+
+                    '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                '</div>'+
+                '<div class="eachLabel">'+
+                    '<label for="Espresso"><input type="checkbox" name="baverage" id="Espresso">Espresso</label>'+
+                    '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                '</div>'+
+                '<div class="eachLabel">'+
+                    '<label for="DoubleEspresso"><input type="checkbox" name="baverage" id="DoubleEspresso">Double Espresso</label>'+
+                    '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                '</div>'+
+                '<div class="eachLabel">'+
+                    '<label for="Latte"><input type="checkbox" name="baverage" id="Latte">Latte</label>'+
+                    '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                '</div>'+
+                '<div class="eachLabel">'+
+                    '<label for="Cappuccino"><input type="checkbox" name="baverage" id="Cappuccino">Cappuccino</label>'+
+                    '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                '</div>'+
+                '<div class="eachLabel">'+
+                    '<label for="HotChocolate"><input type="checkbox" name="baverage" id="HotChocolate">Hot Chocolate</label>'+
+                    '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                '</div>'+
+                '<div class="eachLabel">'+
+                    '<label for="Tea"><input type="checkbox" name="baverage" id="Tea">Tea</label>'+
+                    '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                '</div>'+
+                '<div class="eachLabel">'+
+                    '<label for="Milk"><input type="checkbox" name="baverage" id="Milk">Milk</label>'+
+                    '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                '</div>';
+        return firMenuHTML;
+    }
+    function addSecondMenu() {
+        let secMenuHTML='<div class="eachLabel">'+
+                            '<label for="Snickers"><input type="checkbox" name="food" id="Snickers">Snickers</label>'+
+                            '<div class="count"><div class="minus"><img src="./minus.png" alt=""></div><span class="quantity">1</span><div class="plus"><img src="./plus.png" alt=""></div></div>'+
+                        '</div>';
+        return secMenuHTML;
     }
     //Others -------------------------------!
 
