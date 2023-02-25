@@ -1,0 +1,99 @@
+.menuMoveIcon:active:hover{
+    cursor: grab;
+}
+.menuMoveIcon{
+    cursor: pointer;
+    width: 100%;
+    height: fit-content;
+    background-color: rgb(111, 51, 1);
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    color: white;
+    position: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menuList{
+    width: 98%;
+    height: fit-content;
+    background-color: orange;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+}
+.eachProductDiv{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 10px 0 10px; 
+    font-size: 130%;
+}
+.productN{
+    margin: auto;
+}
+.productCost{
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    left: -5px;
+}
+.totalPriceDiv{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content: end;
+    float: right;
+    LEFT: -5px;
+    font-size: 130%;
+}   
+.totalPrice{
+    padding: 0 10px 0 10px; 
+    height: fit-content;
+    
+}
+.listNames{
+    padding: 0 20px 0 20px; 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: rgb(111, 51, 1);
+    color: white;
+    font-size: 120%;
+}
+.number{
+    margin: auto;
+}
+.cost{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.listOfEachProductDiv{
+    color: black;
+}
+#menuButton{
+    margin: auto;
+    padding: 5px;
+}
+.menuChange{
+    height: 20px;
+    width: 20px;
+    float: right;
+    margin: 0 10px 0 0;
+}
+.dragText{
+    margin: auto;
+    position: relative;
+    left: 10px;
+}
+.addedMenu{
+    width: 500px;
+    background-color: rgb(192, 186, 186);
+    border-radius: 3px;
+    position: absolute; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 200px;
+    left: 500px;
+}

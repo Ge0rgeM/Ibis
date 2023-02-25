@@ -1,0 +1,104 @@
+.backDiv{   
+    width: 350px;
+    height: 350px;
+    background-color: rgb(192, 186, 186);
+    border-radius: 3px;
+    position: absolute; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 130px;
+    left: 30px;
+    z-index: 1000;
+}
+.checkList{
+    width: 98%;
+    height: 98%;
+    background-color: orange;
+    border-radius: 3px;
+}
+#list{
+    margin: 1%;
+    font-size: 150%;
+}
+input{
+    cursor: pointer;
+    zoom: 150%;
+    margin: 1%;
+    accent-color: rgb(87, 54, 17);
+}
+#submitButton{
+    margin: 2%;
+    cursor: pointer;
+}
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+}
+label{
+    color: rgb(87, 54, 17);
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+    cursor: pointer;
+    margin: 1%;
+    line-height: 1.1;
+    width: fit-content;
+    animation: forwards;
+    white-space:nowrap;
+}
+label:hover{
+    color: black;
+}
+.eachLabel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.count{
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    width: fit-content;
+}
+.plus{
+    border-radius: 50%;
+    margin: 0 10px 0 10px;
+    width: 0.8em;
+    cursor: pointer;
+}
+.minus{
+    margin: 0 10px 0 10px;
+    border-radius: 50%;
+    width: 0.8em;
+    cursor: pointer;
+}
+img{
+    width: 100%;
+}
+.moveIcon:active:hover{
+    cursor: grab;
+}
+.moveIcon{
+    width: 100%;
+    height: 25px;
+    background-color: rgb(111, 51, 1);
+    border-radius: 2px 2px 0 0;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menuChangeIcon{
+    cursor: pointer;
+    color: white;
+}
+#menuName{
+    width: 100%;
+    background-color: rgb(111, 51, 1);
+    color: white;
+    font-size: 120%;
+    display: flex;
+    justify-content: center;
+}

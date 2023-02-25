@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="firstMenuCSS.css">
+    <link rel="stylesheet" href="addedMenuCSS.css">
+</head>
+<style>
+    .navigation{
+        width: 99%;
+        height: 30px;
+        background-color: orange;
+        border-radius: 5px;
+        margin: auto;
+    }
+    .adminLogin{
+        width: 95%;
+        height: 29px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+    }
+    .loginText{
+        color: rgb(111, 51, 1);
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <nav class="navigation"><div class="adminLogin"><span class="loginText"><a href="./adminPanel.html">Login</a></span></div></nav>
+    <div class="backDiv" id="toMove">
+        <div class="checkList">
+            <div class="moveIcon" id="toMoveHeader"><div class="dragText">D r a g</div><div class="menuChange"><img onclick="menuChangeJS()" class="menuChangeIcon" src="./change.png" alt=""></div></div>
+            <div id="menuName">First Menu</div>
+            <div id="list"></div>
+            <div class="buttonContainer">
+                <button id="submitButton" onclick="getCheckedInfo()">Submit</button>
+            </div><br>
+        </div>
+    </div>
+</body>
+</html>
+<script src="indexJS.js"></script>
